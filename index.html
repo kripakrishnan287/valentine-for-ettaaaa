@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Valentine ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', 'Segoe UI', cursive;
+  background: linear-gradient(135deg, #ffd6e8, #fff0f6);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Pages */
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.page.active {
+  display: flex;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  max-width: 330px;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-600px); }
+}
+
+h1 { color: #e63973; }
+p { color: #444; }
+
+button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.yes {
+  background: #ff4d88;
+  color: white;
+}
+
+.no {
+  background: #ccc;
+  position: absolute;
+}
+
+/* Final page */
+.final {
+  background: url('75905.jpg') center/cover no-repeat;
+}
+
+.overlay {
+  background: rgba(255,255,255,0.85);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 340px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="card">
+    <h1>Hey Ettaaaa ❤️</h1>
+    <p>I wrote you a little letter...</p>
+    <button class="yes" onclick="goToPage(2)">Open the Letter 💌</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="card">
+    <h1>Will you be my Valentine Ettaaaa? 🥺💖</h1>
+    <p>(NO is a little shy but you can try clicking 😜)</p>
+    <button class="yes" onclick="goToPage(3)">YES 😍</button>
+    <button class="no" id="noBtn">NO 🙈</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page final" id="page3">
+  <div class="overlay">
+    <h1>YAYYY 💕</h1>
+    <p>You are my Valentine.</p>
+    <p>Today, tomorrow, always.</p>
+    <p>I love you endlessly ❤️</p>
+  </div>
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="thousand-years.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function goToPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page' + n).classList.add('active');
+
+  if (n === 3) {
+    playMusic();
+    heartBurst();
+  }
+}
+
+function playMusic() {
+  const music = document.getElementById('bgMusic');
+  music.volume = 0.6;
+  music.play().catch(() => {});
+}
+
+function heartBurst() {
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement('div');
+    heart.innerText = '💖';
+    heart.style.position = 'fixed';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.top = window.innerHeight + 'px';
+    heart.style.fontSize = '24px';
+    heart.style.animation = 'floatUp 3s ease forwards';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+  }
+}
+
+const noBtn = document.getElementById('noBtn');
+
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + 'px';
+  noBtn.style.top = y + 'px';
+}
+
+noBtn.addEventListener('mouseover', moveNo);
+noBtn.addEventListener('touchstart', moveNo);
+noBtn.addEventListener('click', moveNo);
+</script>
+
+</body>
+</html>
